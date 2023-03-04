@@ -90,6 +90,27 @@ class Auth
         unset($_SESSION['user_id']);
         session_destroy();
     }
+    public function getUsername()
+{
+    // Check if the user is logged in by checking the session variable
+    if (isset($_SESSION['user_id'])) {
+        // Get the user from the database
+        $query = "SELECT username FROM users WHERE id = ?";
+        $stmt  = $this->db->prepare($query);
+        $stmt->bind_param("i", $_SESSION['user_id']);
+        $stmt->execute();
+        $result    = $stmt->get_result();
+        $userArray = $result->fetch_assoc();
+        
+        if ($userArray) {
+            // Return the username
+            return $userArray['username'];
+        }
+    }
+
+    // User is not logged in or not found in database
+    return null;
+}
 }
 
 ?>
