@@ -11,6 +11,7 @@ if (isset($_REQUEST["username"], $_REQUEST["password"])) {
     $password = htmlspecialchars($password);
 	if ($auth->login($username, $password)) {
     	$succmsg = "You have successfully logged in";
+	header("Refresh:1; url=/");
 	} 
 	else {
     	$errmsg = "An error has occurred the password or user may be incorrect";
